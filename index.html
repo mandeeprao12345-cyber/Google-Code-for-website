@@ -147,7 +147,6 @@
         </div>
     </header>
 
-    <!-- AI SECTION -->
     <section id="ai-assistant" class="py-24 px-4 bg-slate-100 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -157,7 +156,6 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Document Analyzer -->
                 <div class="lg:col-span-1 bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-file-invoice-dollar text-teal-600"></i> Analyze Document ✨
@@ -181,7 +179,6 @@
                     </div>
                 </div>
 
-                <!-- AI Chatbot -->
                 <div class="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-slate-200 flex flex-col overflow-hidden h-[600px]">
                     <div class="p-5 bg-slate-900 text-white flex justify-between items-center">
                         <div class="flex items-center gap-3">
@@ -220,7 +217,6 @@
         </div>
     </section>
 
-    <!-- FEATURES SECTION -->
     <section id="features" class="py-24 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
@@ -300,25 +296,29 @@
         </div>
     </footer>
 
-    <!-- AI LOGIC -->
     <script>
-        const apiKey = "GEMINI_API_KEY_PLACEHOLDER"; // Replaced by Netlify during build
+        // Placeholder for Netlify to replace during build
+        const apiKey = "GEMINI_API_KEY_PLACEHOLDER"; 
         
-        // Helper: Exponential Backoff Fetch
-        async function fetchGemini(payload, model = "gemini-2.5-flash-preview-09-2025") {
+        // Use Gemini 1.5 Flash - The most stable and widely available model
+        async function fetchGemini(payload, model = "gemini-1.5-flash") {
             const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
             let delay = 1000;
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 3; i++) {
                 try {
                     const response = await fetch(url, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    if (!response.ok) throw new Error('API Error');
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Gemini API Error:', errorData);
+                        throw new Error('API Error');
+                    }
                     return await response.json();
                 } catch (e) {
-                    if (i === 4) throw e;
+                    if (i === 2) throw e;
                     await new Promise(r => setTimeout(r, delay));
                     delay *= 2;
                 }
@@ -350,19 +350,19 @@
             loadingBubble.classList.add('loading-dots');
 
             try {
-                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer user queries about Income Tax in India (regimes, sections like 80C, 80D, capital gains, deadlines). Be professional, concise, and helpful. Always mention that users should file through InstantTaxFile.com for 100% accuracy verified by CAs.";
+                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer user queries about Income Tax in India (regimes, sections like 80C, 80D, capital gains, deadlines). Be professional, concise, and helpful. Always mention that users should file through InstantTaxFile.com for CA-verified accuracy.";
                 
                 const result = await fetchGemini({
                     contents: [{ parts: [{ text: query }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    tools: [{ google_search: {} }]
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                    // Note: Removed 'google_search' tool as it requires specialized API access
                 });
 
-                const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting to my brain. Please try again.";
+                const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble responding right now. Please try again.";
                 loadingBubble.innerText = aiResponse;
                 loadingBubble.classList.remove('loading-dots');
             } catch (err) {
-                loadingBubble.innerText = "Error: System busy. Please try again in a moment.";
+                loadingBubble.innerText = "Connection error. Please check your internet or try again later.";
                 loadingBubble.classList.remove('loading-dots');
             }
         }
@@ -372,7 +372,7 @@
         window.quickAsk = (q) => { chatInput.value = q; handleChat(); };
         window.clearChat = () => { chatWindow.innerHTML = ''; appendMessage("Hi! I'm your AI Tax assistant. How can I help you today?", 'ai'); };
 
-        // --- Image Logic ---
+        // --- Image/Document Analysis Logic ---
         const docUpload = document.getElementById('docUpload');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const analysisResult = document.getElementById('analysisResult');
@@ -402,7 +402,7 @@
             analysisResult.innerText = "Scanning document for tax insights...";
 
             try {
-                const prompt = "Explain what this Indian tax document is. Summarize key fields, amounts, and suggest if there is any action required by the taxpayer (e.g., if it's a notice, what is the deadline?). Be brief and clear.";
+                const prompt = "Explain what this Indian tax document is. Summarize key fields, amounts, and suggest action if required (e.g. deadlines for notices). Be brief and clear.";
                 
                 const result = await fetchGemini({
                     contents: [{
@@ -412,19 +412,19 @@
                             { inlineData: { mimeType: "image/png", data: selectedBase64 } }
                         ]
                     }]
-                }, "gemini-2.5-flash-image-preview");
+                }, "gemini-1.5-flash"); // Flash supports vision perfectly
 
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read document. Ensure it is a clear photo.";
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read the document. Please try a clearer photo.";
                 analysisResult.innerText = text;
             } catch (err) {
-                analysisResult.innerText = "Analysis failed. Please check your connection and try a clearer photo.";
+                analysisResult.innerText = "Analysis failed. Please check your connection and try again.";
             } finally {
                 analyzeBtn.disabled = false;
                 analyzeBtn.innerHTML = "Analyze Again ✨";
             }
         };
 
-        // Standard Form Handling
+        // Standard Form Handling (Connects to your Google Sheet)
         const scriptURL = "https://script.google.com/macros/s/AKfycbxuD8mCPaiOTJvq2xP63P_xTTJVT-EJY3PdAuDnRjezEupmL1-ULbFgF1eoNrVK5HSM/exec";
         const form = document.getElementById("taxForm");
         const mainSubmitBtn = document.getElementById("submitBtn");
@@ -446,7 +446,7 @@
                 document.getElementById("successMessage").classList.remove("hidden");
                 form.reset();
             } catch (error) {
-                console.error(error);
+                console.error('Form Submission Error:', error);
             } finally {
                 mainSubmitBtn.disabled = false;
                 mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`;
