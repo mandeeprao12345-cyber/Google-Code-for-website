@@ -1,4 +1,6 @@
-[[plugins]]
-  package = "@helloample/netlify-plugin-replace"
-  [plugins.inputs]
-    GEMINI_API_KEY_PLACEHOLDER = "env:GOOGLE_API_KEY"
+[build]
+  publish = "."
+  command = "sed -i \"s/GEMINI_API_KEY_PLACEHOLDER/$GOOGLE_API_KEY/g\" index.html"
+
+[build.environment]
+  NODE_VERSION = "20"
