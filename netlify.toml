@@ -1,0 +1,5 @@
+[[plugins]]
+  package = "netlify-plugin-search-replace"
+  [plugins.inputs]
+    [plugins.inputs.searchReplace]
+      "GEMINI_API_KEY_PLACEHOLDER" = "env:GOOGLE_API_KEY"
