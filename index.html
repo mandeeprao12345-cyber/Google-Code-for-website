@@ -334,10 +334,13 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            if (!response.ok) throw new Error('API Error');
+            if (!response.ok) {
+                const errorData = await response.text();
+                console.error("DETAILED GOOGLE ERROR:", errorData); // Prints the exact reason in F12 Console
+                throw new Error(errorData);
+            }
             return await response.json();
-        }
-
+            }
         async function handleChat() {
             if (!chatInput) return;
             const query = chatInput.value.trim();
