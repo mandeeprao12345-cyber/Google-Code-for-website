@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "sed -i 's/GEMINI_API_KEY_PLACEHOLDER/'\"$GOOGLE_API_KEY\"'/g' index.html"
+  command = "node -e \"const fs = require('fs'); let html = fs.readFileSync('index.html', 'utf8'); html = html.replace('GEMINI_API_KEY_PLACEHOLDER', process.env.GOOGLE_API_KEY); fs.writeFileSync('index.html', html);\""
 
 [build.environment]
   NODE_VERSION = "20"
