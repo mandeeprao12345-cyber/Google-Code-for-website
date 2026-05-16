@@ -356,10 +356,12 @@
                 const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer queries about Income Tax in India. For FY 2026-27, assume the New Tax Regime is the default. Be professional and concise.";
                 
                 const result = await fetchGemini({
-                    contents: [{ parts: [{ text: query }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                });
-
+    contents: [{
+        parts: [{
+            text: `${systemPrompt}\n\nUser Question: ${query}`
+        }]
+    }]
+});
                 const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again.";
                 if (loadingBubble) {
                     loadingBubble.innerText = aiResponse;
