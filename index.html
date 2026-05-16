@@ -277,7 +277,7 @@
                     <ul class="space-y-4 text-slate-400">
                         <li>📍 Gurgaon, Haryana, India</li>
                         <li>📞 <a href="tel:+917676901038" class="hover:text-teal-400">+91 7676901038</a></li>
-                        <li>✉️ <a href="mailto:mandeeprao12345@gmail.com" class="hover:text-teal-400">mandeeprao12345@gmail.com</a></li>
+                        <li>✉️ <a href="mailto:contact@instanttaxfile.com" class="hover:text-teal-400">contact@instanttaxfile.com</a></li>
                     </ul>
                 </div>
                 <div>
@@ -302,22 +302,22 @@
         
         // Use Gemini 1.5 Flash - The most stable and widely available model
         async function fetchGemini(payload, model = "gemini-1.5-flash") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-            let delay = 1000;
-            for (let i = 0; i < 3; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Gemini API Error:', errorData);
-                        throw new Error('API Error');
-                    }
-                    return await response.json();
-                } catch (e) {
+    // We use v1 instead of v1beta for better stability with standard keys
+    const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
+    
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        console.error('Gemini API Error:', error);
+        throw new Error('API Error');
+    }
+    return await response.json();
+        } catch (e) {
                     if (i === 2) throw e;
                     await new Promise(r => setTimeout(r, delay));
                     delay *= 2;
