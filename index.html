@@ -296,35 +296,30 @@
         </div>
     </footer>
 <script>
-        const apiKey = "GEMINI_API_KEY_PLACEHOLDER"; // Replaced by Netlify during build
+        const apiKey = "GEMINI_API_KEY_PLACEHOLDER";
         
-        // Helper: Exponential Backoff Fetch
-        async function fetchGemini(payload, model = "gemini-2.0-flash") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-            let delay = 1000;
-            for (let i = 0; i < 5; i++) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) throw new Error('API Error');
-                    return await response.json();
-                } catch (e) {
-                    if (i === 4) throw e;
-                    await new Promise(r => setTimeout(r, delay));
-                    delay *= 2;
-                }
-            }
-        }
-
-        // --- Chat Logic ---
+        // Setup simple elements
         const chatWindow = document.getElementById('chatWindow');
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendChatBtn');
 
+        // Make functions globally available immediately so the buttons don't crash the page
+        window.clearChat = function() {
+            if (chatWindow) {
+                chatWindow.innerHTML = '';
+                appendMessage("Hi! I'm your AI Tax assistant. How can I help you today?", 'ai');
+            }
+        };
+
+        window.quickAsk = function(q) {
+            if (chatInput) {
+                chatInput.value = q;
+                handleChat();
+            }
+        };
+
         function appendMessage(text, role) {
+            if (!chatWindow) return;
             const bubble = document.createElement('div');
             bubble.className = `chat-bubble ${role === 'user' ? 'chat-user' : 'chat-ai'}`;
             bubble.innerText = text;
@@ -333,7 +328,19 @@
             return bubble;
         }
 
+        async function fetchGemini(payload) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error('API Error');
+            return await response.json();
+        }
+
         async function handleChat() {
+            if (!chatInput) return;
             const query = chatInput.value.trim();
             if (!query) return;
 
@@ -341,29 +348,38 @@
             appendMessage(query, 'user');
 
             const loadingBubble = appendMessage('AI is thinking...', 'ai');
-            loadingBubble.classList.add('loading-dots');
+            if (loadingBubble) loadingBubble.classList.add('loading-dots');
 
             try {
-                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer queries about Income Tax in India. IMPORTANT: For FY 2026-27, assume the New Tax Regime is the default unless the user asks otherwise. Be professional and concise. Always suggest filing through InstantTaxFile.com for CA-verified accuracy.";
+                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer queries about Income Tax in India. For FY 2026-27, assume the New Tax Regime is the default. Be professional and concise.";
                 
                 const result = await fetchGemini({
                     contents: [{ parts: [{ text: query }] }],
                     systemInstruction: { parts: [{ text: systemPrompt }] }
-                }, "gemini-2.0-flash");
+                });
 
                 const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again.";
-                loadingBubble.innerText = aiResponse;
-                loadingBubble.classList.remove('loading-dots');
+                if (loadingBubble) {
+                    loadingBubble.innerText = aiResponse;
+                    loadingBubble.classList.remove('loading-dots');
+                }
             } catch (err) {
-                loadingBubble.innerText = "Error: System busy. Please try again in a moment.";
-                loadingBubble.classList.remove('loading-dots');
+                if (loadingBubble) {
+                    loadingBubble.innerText = "Error: System busy. Please try again.";
+                    loadingBubble.classList.remove('loading-dots');
+                }
             }
         }
 
-        sendBtn.onclick = handleChat;
-        chatInput.onkeypress = (e) => e.key === 'Enter' && handleChat();
-        window.quickAsk = (q) => { chatInput.value = q; handleChat(); };
-        window.clearChat = () => { chatWindow.innerHTML = ''; appendMessage("Hi! I'm your AI Tax assistant. How can I help you today?", 'ai'); };
+        // Attach event listeners safely
+        if (sendBtn) sendBtn.onclick = handleChat;
+        if (chatInput) {
+            chatInput.onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    handleChat();
+                }
+            };
+        }
 
         // --- Image Logic ---
         const docUpload = document.getElementById('docUpload');
@@ -372,80 +388,92 @@
         const uploadPreview = document.getElementById('uploadPreview');
         let selectedBase64 = "";
 
-        docUpload.onchange = (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
+        if (docUpload) {
+            docUpload.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = (re) => {
-                selectedBase64 = re.target.result.split(',')[1];
-                uploadPreview.innerHTML = `<img src="${re.target.result}" class="max-h-32 rounded-lg shadow-sm">`;
-                analyzeBtn.disabled = false;
-                analyzeBtn.className = "w-full mt-6 py-3 bg-teal-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md";
+                const reader = new FileReader();
+                reader.onload = (re) => {
+                    selectedBase64 = re.target.result.split(',')[1];
+                    if (uploadPreview) uploadPreview.innerHTML = `<img src="${re.target.result}" class="max-h-32 rounded-lg shadow-sm">`;
+                    if (analyzeBtn) {
+                        analyzeBtn.disabled = false;
+                        analyzeBtn.className = "w-full mt-6 py-3 bg-teal-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md";
+                    }
+                };
+                reader.readAsDataURL(file);
             };
-            reader.readAsDataURL(file);
-        };
+        }
 
-        analyzeBtn.onclick = async () => {
-            if (!selectedBase64) return;
-            
-            analyzeBtn.disabled = true;
-            analyzeBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Analyzing...`;
-            analysisResult.classList.remove('hidden');
-            analysisResult.innerText = "Scanning document for tax insights...";
-
-            try {
-                const prompt = "Explain what this Indian tax document is. Summarize key fields, amounts, and suggest if there is any action required by the taxpayer. Be brief and clear.";
+        if (analyzeBtn) {
+            analyzeBtn.onclick = async () => {
+                if (!selectedBase64) return;
                 
-                const result = await fetchGemini({
-                    contents: [{
-                        role: "user",
-                        parts: [
-                            { text: prompt },
-                            { inlineData: { mimeType: "image/png", data: selectedBase64 } }
-                        ]
-                    }]
-                }, "gemini-2.0-flash");
+                analyzeBtn.disabled = true;
+                analyzeBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Analyzing...`;
+                if (analysisResult) {
+                    analysisResult.classList.remove('hidden');
+                    analysisResult.innerText = "Scanning document for tax insights...";
+                }
 
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read document. Ensure it is a clear photo.";
-                analysisResult.innerText = text;
-            } catch (err) {
-                analysisResult.innerText = "Analysis failed. Please check your connection and try a clearer photo.";
-            } finally {
-                analyzeBtn.disabled = false;
-                analyzeBtn.innerHTML = "Analyze Again ✨";
-            }
-        };
+                try {
+                    const prompt = "Explain what this Indian tax document is. Summarize key fields and amounts. Be brief and clear.";
+                    const result = await fetchGemini({
+                        contents: [{
+                            role: "user",
+                            parts: [
+                                { text: prompt },
+                                { inlineData: { mimeType: "image/png", data: selectedBase64 } }
+                            ]
+                        }]
+                    });
+
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read document.";
+                    if (analysisResult) analysisResult.innerText = text;
+                } catch (err) {
+                    if (analysisResult) analysisResult.innerText = "Analysis failed. Please try again.";
+                } finally {
+                    analyzeBtn.disabled = false;
+                    analyzeBtn.innerHTML = "Analyze Again ✨";
+                }
+            };
+        }
 
         // Standard Form Handling
         const scriptURL = "https://script.google.com/macros/s/AKfycbxuD8mCPaiOTJvq2xP63P_xTTJVT-EJY3PdAuDnRjezEupmL1-ULbFgF1eoNrVK5HSM/exec";
         const form = document.getElementById("taxForm");
         const mainSubmitBtn = document.getElementById("submitBtn");
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            mainSubmitBtn.disabled = true;
-            mainSubmitBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Processing...`;
-            
-            const formData = {
-                name: document.getElementById("name").value,
-                phone: document.getElementById("phone").value,
-                email: document.getElementById("email").value,
-                filingType: document.getElementById("filingType").value
-            };
+        if (form) {
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                if (mainSubmitBtn) {
+                    mainSubmitBtn.disabled = true;
+                    mainSubmitBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Processing...`;
+                }
+                
+                const formData = {
+                    name: document.getElementById("name")?.value || "",
+                    phone: document.getElementById("phone")?.value || "",
+                    email: document.getElementById("email")?.value || "",
+                    filingType: document.getElementById("filingType")?.value || ""
+                };
 
-            try {
-                await fetch(scriptURL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
-                document.getElementById("successMessage").classList.remove("hidden");
-                form.reset();
-            } catch (error) {
-                console.error(error);
-            } finally {
-                mainSubmitBtn.disabled = false;
-                mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`;
-            }
-        });
+                try {
+                    await fetch(scriptURL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
+                    document.getElementById("successMessage")?.classList.remove("hidden");
+                    form.reset();
+                } catch (error) {
+                    console.error(error);
+                } [[rem_disabled]] {
+                    if (mainSubmitBtn) {
+                        mainSubmitBtn.disabled = false;
+                        mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`;
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
-   
