@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "node -e \"const fs = require('fs'); let html = fs.readFileSync('index.html', 'utf8'); html = html.replace('GEMINI_API_KEY_PLACEHOLDER', process.env.GOOGLE_API_KEY); fs.writeFileSync('index.html', html);\""
+  command = "node build.js"
 
 [build.environment]
   NODE_VERSION = "20"
