@@ -298,12 +298,11 @@
 <script>
         const apiKey = "GEMINI_API_KEY_PLACEHOLDER";
         
-        // Setup simple elements
         const chatWindow = document.getElementById('chatWindow');
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendChatBtn');
 
-        // Make functions globally available immediately so the buttons don't crash the page
+        // Setup global functions immediately so buttons don't crash
         window.clearChat = function() {
             if (chatWindow) {
                 chatWindow.innerHTML = '';
@@ -371,7 +370,6 @@
             }
         }
 
-        // Attach event listeners safely
         if (sendBtn) sendBtn.onclick = handleChat;
         if (chatInput) {
             chatInput.onkeypress = function(e) {
@@ -466,7 +464,7 @@
                     form.reset();
                 } catch (error) {
                     console.error(error);
-                } [[rem_disabled]] {
+                } finally {
                     if (mainSubmitBtn) {
                         mainSubmitBtn.disabled = false;
                         mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`;
