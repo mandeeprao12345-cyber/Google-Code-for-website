@@ -295,30 +295,24 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        // Placeholder for Netlify to replace during build
-        const apiKey = "GEMINI_API_KEY_PLACEHOLDER"; 
+<script>
+        const apiKey = "GEMINI_API_KEY_PLACEHOLDER"; // Replaced by Netlify during build
         
-        // Use Gemini 1.5 Flash - The most stable and widely available model
-        async function fetchGemini(payload, model = "gemini-1.5-flash") {
-    // We use v1 instead of v1beta for better stability with standard keys
-    const url = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${apiKey}`;
-    
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-        const error = await response.json();
-        console.error('Gemini API Error:', error);
-        throw new Error('API Error');
-    }
-    return await response.json();
-        } catch (e) {
-                    if (i === 2) throw e;
+        // Helper: Exponential Backoff Fetch
+        async function fetchGemini(payload, model = "gemini-2.0-flash") {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+            let delay = 1000;
+            for (let i = 0; i < 5; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error('API Error');
+                    return await response.json();
+                } catch (e) {
+                    if (i === 4) throw e;
                     await new Promise(r => setTimeout(r, delay));
                     delay *= 2;
                 }
@@ -350,19 +344,18 @@
             loadingBubble.classList.add('loading-dots');
 
             try {
-                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer user queries about Income Tax in India (regimes, sections like 80C, 80D, capital gains, deadlines). Be professional, concise, and helpful. Always mention that users should file through InstantTaxFile.com for CA-verified accuracy.";
+                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer queries about Income Tax in India. IMPORTANT: For FY 2026-27, assume the New Tax Regime is the default unless the user asks otherwise. Be professional and concise. Always suggest filing through InstantTaxFile.com for CA-verified accuracy.";
                 
                 const result = await fetchGemini({
                     contents: [{ parts: [{ text: query }] }],
                     systemInstruction: { parts: [{ text: systemPrompt }] }
-                    // Note: Removed 'google_search' tool as it requires specialized API access
-                });
+                }, "gemini-2.0-flash");
 
-                const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble responding right now. Please try again.";
+                const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again.";
                 loadingBubble.innerText = aiResponse;
                 loadingBubble.classList.remove('loading-dots');
             } catch (err) {
-                loadingBubble.innerText = "Connection error. Please check your internet or try again later.";
+                loadingBubble.innerText = "Error: System busy. Please try again in a moment.";
                 loadingBubble.classList.remove('loading-dots');
             }
         }
@@ -372,7 +365,7 @@
         window.quickAsk = (q) => { chatInput.value = q; handleChat(); };
         window.clearChat = () => { chatWindow.innerHTML = ''; appendMessage("Hi! I'm your AI Tax assistant. How can I help you today?", 'ai'); };
 
-        // --- Image/Document Analysis Logic ---
+        // --- Image Logic ---
         const docUpload = document.getElementById('docUpload');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const analysisResult = document.getElementById('analysisResult');
@@ -402,7 +395,7 @@
             analysisResult.innerText = "Scanning document for tax insights...";
 
             try {
-                const prompt = "Explain what this Indian tax document is. Summarize key fields, amounts, and suggest action if required (e.g. deadlines for notices). Be brief and clear.";
+                const prompt = "Explain what this Indian tax document is. Summarize key fields, amounts, and suggest if there is any action required by the taxpayer. Be brief and clear.";
                 
                 const result = await fetchGemini({
                     contents: [{
@@ -412,19 +405,19 @@
                             { inlineData: { mimeType: "image/png", data: selectedBase64 } }
                         ]
                     }]
-                }, "gemini-1.5-flash"); // Flash supports vision perfectly
+                }, "gemini-2.0-flash");
 
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read the document. Please try a clearer photo.";
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read document. Ensure it is a clear photo.";
                 analysisResult.innerText = text;
             } catch (err) {
-                analysisResult.innerText = "Analysis failed. Please check your connection and try again.";
+                analysisResult.innerText = "Analysis failed. Please check your connection and try a clearer photo.";
             } finally {
                 analyzeBtn.disabled = false;
                 analyzeBtn.innerHTML = "Analyze Again ✨";
             }
         };
 
-        // Standard Form Handling (Connects to your Google Sheet)
+        // Standard Form Handling
         const scriptURL = "https://script.google.com/macros/s/AKfycbxuD8mCPaiOTJvq2xP63P_xTTJVT-EJY3PdAuDnRjezEupmL1-ULbFgF1eoNrVK5HSM/exec";
         const form = document.getElementById("taxForm");
         const mainSubmitBtn = document.getElementById("submitBtn");
@@ -446,7 +439,7 @@
                 document.getElementById("successMessage").classList.remove("hidden");
                 form.reset();
             } catch (error) {
-                console.error('Form Submission Error:', error);
+                console.error(error);
             } finally {
                 mainSubmitBtn.disabled = false;
                 mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`;
@@ -455,3 +448,4 @@
     </script>
 </body>
 </html>
+   
