@@ -207,10 +207,10 @@
                         </div>
                     </div>
 
-                    <div class="p-4 border-t border-slate-100 bg-slate-50">
-                        <div class="flex gap-2">
-                            <input type="text" id="chatInput" placeholder="Ask anything about Indian taxes..." class="flex-1 px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none">
-                            <button id="sendChatBtn" class="w-12 h-12 bg-teal-600 text-white rounded-xl flex items-center justify-center hover:bg-teal-700 transition-all">
+                    <div class="p-4 border-t border-slate-200 bg-slate-100 relative z-[9999]" style="pointer-events: auto;">
+                        <div class="flex gap-2 relative z-[9999]" style="pointer-events: auto;">
+                            <input type="text" id="chatInput" placeholder="Ask anything about Indian taxes..." class="flex-1 px-4 py-3 rounded-xl border-2 border-slate-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none text-slate-900 bg-white shadow-sm" style="pointer-events: auto !important; cursor: text !important; user-select: text !important; position: relative; z-index: 9999;">
+                            <button id="sendChatBtn" class="w-12 h-12 bg-teal-600 text-white rounded-xl flex items-center justify-center hover:bg-teal-700 transition-all shadow-sm cursor-pointer" style="pointer-events: auto !important; position: relative; z-index: 9999;">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
@@ -302,8 +302,9 @@
 
     <!-- AI LOGIC -->
     <script>
-        // Placeholder for Netlify Build to replace using sed command in netlify.toml
-        const apiKey = "__GEMINI_API_KEY__"; 
+        // PASTING YOUR KEY HERE IS A SECURITY RISK ON PUBLIC GITHUB REPOS
+        // Only do this if you accept the risk of your key being used by others.
+        const apiKey = "PASTE_YOUR_ACTUAL_KEY_HERE"; 
         
         async function fetchGemini(payload) {
             // Using gemini-1.5-flash for reliability and free-tier access
@@ -339,10 +340,10 @@
 
         async function handleChat() {
             const query = chatInput.value.trim();
-            // Guard clause to prevent running without a valid key replacement
-            if (!query || !apiKey || apiKey === "__GEMINI_API_KEY__") {
-                if (apiKey === "__GEMINI_API_KEY__") {
-                    appendMessage("System Note: AI is not yet configured. Please set GOOGLE_API_KEY in Netlify settings.", 'ai');
+            // Guard clause
+            if (!query || !apiKey || apiKey === "PASTE_YOUR_ACTUAL_KEY_HERE") {
+                if (apiKey === "PASTE_YOUR_ACTUAL_KEY_HERE") {
+                    appendMessage("System Note: Please paste your API key directly into the script.", 'ai');
                 }
                 return;
             }
@@ -380,7 +381,13 @@
 
         if (sendBtn) sendBtn.onclick = handleChat;
         if (chatInput) {
-            chatInput.onkeypress = (e) => e.key === 'Enter' && handleChat();
+            // Upgraded listener to guarantee Enter key works smoothly without refreshing
+            chatInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleChat();
+                }
+            });
         }
 
         window.quickAsk = (q) => { 
@@ -424,7 +431,7 @@
 
         if (analyzeBtn) {
             analyzeBtn.onclick = async () => {
-                if (!selectedBase64 || apiKey === "__GEMINI_API_KEY__") return;
+                if (!selectedBase64 || apiKey === "PASTE_YOUR_ACTUAL_KEY_HERE") return;
                 
                 analyzeBtn.disabled = true;
                 analyzeBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Analyzing...`;
