@@ -1,492 +1,496 @@
 <!DOCTYPE html>
-<html lang="en">
- 
+<html lang="en" class="scroll-smooth">
 <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width,
-initial-scale=1.0"/>
- <title>EasyTax India | Income Tax Filing</title>
- 
-  <link
-href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-rel="stylesheet">
- 
- <style>
- 
-    *{
-     margin:0;
-     padding:0;
-     box-sizing:border-box;
-    }
- 
-    body{
-     font-family:'Poppins',sans-serif;
-      background:#f4f8ff;
-     color:#1e293b;
-     overflow-x:hidden;
-    }
- 
-   header{
-     background:linear-gradient(135deg,#0052cc,#007bff);
-     color:white;
-     padding-bottom:80px;
-    }
- 
-    nav{
-     display:flex;
-     justify-content:space-between;
-     align-items:center;
-     padding:25px 8%;
-    }
- 
-    .logo{
-     font-size:32px;
-     font-weight:700;
-    }
- 
-    .hero{
-     display:flex;
-     justify-content:space-between;
-     align-items:center;
-     gap:60px;
-      padding:60px
-8%;
-     flex-wrap:wrap;
-    }
- 
-    .hero-text{
-     flex:1;
-     min-width:300px;
-    }
- 
-    .hero-text h1{
-     font-size:58px;
-     line-height:1.2;
-     margin-bottom:25px;
-    }
- 
-    .hero-text p{
-     font-size:18px;
-     color:#dbeafe;
-     margin-bottom:30px;
-    }
- 
-    .hero-btn{
-     display:inline-block;
-     background:white;
-     color:#0052cc;
-     padding:15px 28px;
-     border-radius:12px;
-     text-decoration:none;
-     font-weight:600;
-     transition:0.3s;
-    }
- 
-    .hero-btn:hover{
-     transform:translateY(-3px);
-    }
- 
-    .form-card{
-     width:420px;
-     background:white;
-     border-radius:22px;
-     padding:35px;
-     box-shadow:0 10px 40px rgba(0,0,0,0.15);
-    }
- 
-    .form-card h2{
-     color:#0052cc;
-     margin-bottom:25px;
-     text-align:center;
-    }
- 
-    .input-box{
-     margin-bottom:20px;
-    }
- 
-    .input-box label{
-     display:block;
-     margin-bottom:8px;
-     font-weight:500;
-     color:#334155;
-    }
- 
-    .input-box input,
-    .input-box select{
-     width:100%;
-     padding:14px;
-     border-radius:10px;
-     border:1px solid #cbd5e1;
-     font-size:15px;
-    }
- 
-    .submit-btn{
-     width:100%;
-     padding:16px;
-     background:#007bff;
-     color:white;
-     border:none;
-     border-radius:12px;
-     font-size:16px;
-     font-weight:600;
-     cursor:pointer;
-     transition:0.3s;
-    }
- 
-    .submit-btn:hover{
-     background:#0056d2;
-    }
- 
-    .submit-btn:disabled{
-     opacity:0.7;
-     cursor:not-allowed;
-    }
- 
-    section{
-     padding:90px 8%;
-    }
- 
-    .section-title{
-     text-align:center;
-     margin-bottom:50px;
-    }
- 
-    .section-title h2{
-     color:#0052cc;
-     font-size:42px;
-    }
- 
-    .features{
-      display:grid;
-     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-     gap:25px;
-    }
- 
-    .feature-card{
-     background:white;
-     padding:30px;
-     border-radius:18px;
-     box-shadow:0 6px 20px rgba(0,0,0,0.08);
-     transition:0.3s;
-    }
- 
-    .feature-card:hover{
-     transform:translateY(-6px);
-    }
- 
-    .feature-card h3{
-     color:#0052cc;
-     margin-bottom:15px;
-    }
- 
-    .about{
-     background:#eaf3ff;
-     padding:50px;
-     border-radius:22px;
-     text-align:center;
-    }
- 
-    .about h2{
-     color:#0052cc;
-     margin-bottom:20px;
-    }
- 
-    footer{
-     background:#0052cc;
-     color:white;
-     text-align:center;
-     padding:40px 20px;
-    }
- 
-    footer p{
-     margin:8px 0;
-    }
- 
-    .success-message{
-     display:none;
-     margin-top:20px;
-     background:#dcfce7;
-     color:#166534;
-     padding:15px;
-     border-radius:10px;
-     text-align:center;
-     font-weight:500;
-    }
- 
-    .error-message{
-     display:none;
-     margin-top:20px;
-     background:#fee2e2;
-     color:#991b1b;
-     padding:15px;
-     border-radius:10px;
-     text-align:center;
-     font-weight:500;
-    }
- 
-    @media(max-width:900px){
- 
-     .hero{
-       flex-direction:column;
-      }
- 
-      .hero-text h1{
-       font-size:42px;
-      }
- 
-     .form-card{
-       width:100%;
-      }
- 
-    }
- 
- </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstantTaxFile.com | Expert Income Tax Filing India</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .logo-font { font-family: 'Lora', serif; }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #0d9488 100%);
+        }
+        .text-teal-custom { color: #00a8a8; }
+        .bg-teal-custom { background-color: #00a8a8; }
+        
+        /* AI Chat Styles */
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+        }
+        .chat-user {
+            background: #0d9488;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-ai {
+            background: #f1f5f9;
+            color: #1e293b;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .loading-dots:after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
+        }
+    </style>
 </head>
- 
-<body>
- 
-<header>
- 
- <nav>
-   <div class="logo">EasyTax India</div>
- </nav>
- 
-  <div
-class="hero">
- 
-   <div class="hero-text">
- 
-     <h1>
-       File Your Income Tax Return Easily
-     </h1>
- 
-     <p>
-       Trusted tax filing platform managed by Professional Chartered
-Accountants.
-       Submit your details and our expert team will connect with you shortly.
-     </p>
- 
-     <a href="#form-section" class="hero-btn">
-       Start Filing
-     </a>
- 
-   </div>
- 
-   <div class="form-card" id="form-section">
- 
-     <h2>Get Started</h2>
- 
-     <form id="taxForm">
- 
-       <div class="input-box">
-         <label>Full Name</label>
-         <input type="text" id="name" required>
-       </div>
- 
-       <div class="input-box">
-         <label>Phone Number</label>
-         <input type="tel" id="phone" required>
-       </div>
- 
-       <div class="input-box">
-         <label>Email Address</label>
-         <input type="email" id="email" required>
-       </div>
- 
-       <div class="input-box">
-         <label>Type of Filing</label>
- 
-         <select id="filingType" required>
-           <option value="">Select Option</option>
-           <option>Salary Income</option>
-           <option>Business Income</option>
-           <option>Capital Gains</option>
-           <option>Crypto / Trading Income</option>
-           <option>Notice Handling</option>
-         </select>
- 
+<body class="bg-slate-50 text-slate-900">
+
+    <nav class="sticky top-0 z-50 glass-morphism border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="bg-teal-custom p-2 rounded-lg">
+                        <i class="fas fa-bolt text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl tracking-tight text-slate-900">
+                        <span class="logo-font font-bold">instanttaxfile</span><span class="font-bold text-teal-custom">.com</span>
+                    </span>
+                </div>
+                <div class="hidden md:flex space-x-8 font-medium text-slate-600">
+                    <a href="#features" class="hover:text-teal-600 transition-colors">Features</a>
+                    <a href="#ai-assistant" class="hover:text-teal-600 transition-colors">AI Help ✨</a>
+                    <a href="#about" class="hover:text-teal-600 transition-colors">About Us</a>
+                    <a href="tel:+917676901038" class="text-teal-600 font-bold"><i class="fas fa-phone mr-2"></i>+91 7676901038</a>
+                </div>
+            </div>
         </div>
- 
-       <button type="submit" class="submit-btn"
-id="submitBtn">
-         Submit Details
-       </button>
- 
-       <div class="success-message"
-id="successMessage">
-         Your details have been submitted successfully.
-       </div>
- 
-        <div class="error-message"
-id="errorMessage">
-         Something went wrong. Please try again.
-       </div>
- 
-     </form>
- 
-   </div>
- 
- </div>
- 
-</header>
- 
-<section>
- 
-  <div
-class="section-title">
-   <h2>Why Choose EasyTax India?</h2>
- </div>
- 
-  <div
-class="features">
- 
-   <div class="feature-card">
-     <h3>Professional CA Support</h3>
-     <p>
-       Managed by experienced Chartered Accountants with finance and taxation
-expertise.
-     </p>
-   </div>
- 
-   <div class="feature-card">
-     <h3>Quick & Simple Process</h3>
-     <p>
-       Just share your details and our team will handle the rest smoothly.
-     </p>
-   </div>
- 
-   <div class="feature-card">
-     <h3>Secure Data Handling</h3>
-     <p>
-       Your information is securely managed and kept confidential.
-     </p>
-   </div>
- 
-   <div class="feature-card">
-     <h3>Fast Response</h3>
-     <p>
-       Our team connects quickly to begin your filing process efficiently.
-     </p>
-   </div>
- 
- </div>
- 
-</section>
- 
-<section>
- 
-  <div
-class="about">
- 
-   <h2>About EasyTax India</h2>
- 
-   <p>
-     EasyTax India is a modern tax filing platform created to simplify
-     income tax return filing for salaried employees, professionals,
-     traders and businesses across India.
-   </p>
- 
- </div>
- 
-</section>
- 
-<footer>
- 
- <h2>EasyTax India</h2>
- 
- <p>Managed by Professional Chartered Accountants</p>
- 
- <p>📍 Gurgaon, India</p>
- 
- <p>📞 +91 7676901038</p>
- 
- <p>✉️
-mandeeprao12345@gmail.com</p>
- 
- <p>© 2026 EasyTax India. All Rights Reserved.</p>
- 
-</footer>
- 
-<script>
- 
-const scriptURL =
-"https://script.google.com/macros/s/AKfycbxuD8mCPaiOTJvq2xP63P_xTTJVT-EJY3PdAuDnRjezEupmL1-ULbFgF1eoNrVK5HSM/exec";
- 
-const form =
-document.getElementById("taxForm");
- 
-const submitBtn =
-document.getElementById("submitBtn");
- 
-const successMessage =
-document.getElementById("successMessage");
- 
-const errorMessage =
-document.getElementById("errorMessage");
- 
-form.addEventListener("submit", async
-(e) => {
- 
- e.preventDefault();
- 
- submitBtn.disabled = true;
- 
- submitBtn.innerText = "Submitting...";
- 
- successMessage.style.display = "none";
- 
- errorMessage.style.display = "none";
- 
-  const
-formData = {
- 
-    name:
-document.getElementById("name").value,
- 
-   phone: document.getElementById("phone").value,
- 
-   email: document.getElementById("email").value,
- 
-   filingType: document.getElementById("filingType").value
- 
-  };
- 
-  try {
- 
-    await
-fetch(scriptURL, {
- 
-     method: "POST",
- 
-     mode: "no-cors",
- 
-     headers: {
-       "Content-Type": "application/json"
-      },
- 
-     body: JSON.stringify(formData)
- 
-    });
- 
-   successMessage.style.display = "block";
- 
-   form.reset();
- 
-  }
-catch(error) {
- 
-   console.error(error);
- 
-   errorMessage.style.display = "block";
- 
-  }
- 
- submitBtn.disabled = false;
- 
- submitBtn.innerText = "Submit Details";
- 
-});
- 
-</script>
+    </nav>
+
+    <header class="gradient-bg pt-16 pb-32 px-4 relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-72 h-72 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
+            <div class="lg:w-1/2 text-center lg:text-left">
+                <span class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-teal-100 uppercase bg-teal-900/50 rounded-full">AI-Powered Tax Solutions</span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+                    File Your Taxes with <span class="text-teal-300">AI Intelligence.</span>
+                </h1>
+                <p class="text-xl text-teal-50 mb-10 leading-relaxed max-w-2xl">
+                    Get instant answers to your tax queries and professional CA verification. Fast, accurate, and completely stress-free.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#form-section" class="px-8 py-4 bg-white text-teal-900 font-bold rounded-xl shadow-lg hover:bg-teal-50 transition-all transform hover:-translate-y-1">
+                        Start Filing Now
+                    </a>
+                    <a href="#ai-assistant" class="px-8 py-4 bg-teal-900/40 text-white font-bold rounded-xl border border-white/20 hover:bg-teal-900/60 transition-all flex items-center gap-2">
+                        Try AI Assistant ✨
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:w-5/12 w-full" id="form-section">
+                <div class="bg-white p-8 rounded-3xl shadow-2xl border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2 text-center">Get Started</h2>
+                    <p class="text-slate-500 mb-8 text-center">Managed by Professional CAs</p>
+                    
+                    <form id="taxForm" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Full Name</label>
+                            <input type="text" id="name" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none" placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                                <input type="tel" id="phone" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none" placeholder="+91">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-2">Email Address</label>
+                                <input type="email" id="email" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none" placeholder="Email id">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Type of Filing</label>
+                            <select id="filingType" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-teal-500 outline-none cursor-pointer">
+                                <option value="">Select Income Category</option>
+                                <option>Salary Income</option>
+                                <option>Business/Profession</option>
+                                <option>Capital Gains (Stocks/Property)</option>
+                                <option>Crypto / Trading Income</option>
+                                <option>Income Tax Notice Reply</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full py-4 bg-teal-600 text-white font-bold rounded-xl shadow-md hover:bg-teal-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                            <span>Submit Details</span>
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+
+                        <div id="successMessage" class="hidden p-4 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-xl text-center font-medium">
+                            <i class="fas fa-check-circle mr-2"></i> Details sent successfully!
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- AI SECTION -->
+    <section id="ai-assistant" class="py-24 px-4 bg-slate-100 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-teal-600 font-bold text-sm tracking-widest uppercase">Intelligent Support</span>
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">AI Tax Assistant ✨</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">Ask about deductions, rules, or even upload a document for instant explanation.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Document Analyzer -->
+                <div class="lg:col-span-1 bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-file-invoice-dollar text-teal-600"></i> Analyze Document ✨
+                    </h3>
+                    <p class="text-slate-500 mb-6 text-sm">Upload a screenshot of a tax notice, Form 16, or investment proof for an AI summary.</p>
+                    
+                    <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center hover:border-teal-400 transition-colors cursor-pointer relative" id="dropZone">
+                        <input type="file" id="docUpload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
+                        <div id="uploadPreview" class="flex flex-col items-center">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 mb-4"></i>
+                            <span class="text-slate-600 font-medium">Click or drag photo</span>
+                            <span class="text-slate-400 text-xs mt-1">Supports PNG, JPG</span>
+                        </div>
+                    </div>
+                    
+                    <button id="analyzeBtn" disabled class="w-full mt-6 py-3 bg-slate-200 text-slate-500 font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+                        Analyze Now ✨
+                    </button>
+                    
+                    <div id="analysisResult" class="mt-6 p-4 bg-teal-50 border border-teal-100 rounded-xl text-sm text-slate-700 hidden leading-relaxed">
+                    </div>
+                </div>
+
+                <!-- AI Chatbot -->
+                <div class="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-slate-200 flex flex-col overflow-hidden h-[600px]">
+                    <div class="p-5 bg-slate-900 text-white flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold leading-tight">TaxBot ✨</h3>
+                                <p class="text-xs text-teal-300">Online | AI Consultant</p>
+                            </div>
+                        </div>
+                        <button onclick="clearChat()" class="text-slate-400 hover:text-white text-xs underline">Clear Chat</button>
+                    </div>
+
+                    <div id="chatWindow" class="flex-1 overflow-y-auto p-6 flex flex-col">
+                        <div class="chat-bubble chat-ai">
+                            Hi! I'm your AI Tax assistant. You can ask me questions like:
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <button onclick="quickAsk('What is 80C deduction?')" class="px-3 py-1 bg-white border border-slate-200 rounded-full text-xs hover:bg-teal-50 transition-colors">What is 80C?</button>
+                                <button onclick="quickAsk('Old vs New Regime?')" class="px-3 py-1 bg-white border border-slate-200 rounded-full text-xs hover:bg-teal-50 transition-colors">Old vs New Regime?</button>
+                                <button onclick="quickAsk('Capital Gains on Stocks?')" class="px-3 py-1 bg-white border border-slate-200 rounded-full text-xs hover:bg-teal-50 transition-colors">Capital Gains?</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 border-t border-slate-100 bg-slate-50">
+                        <div class="flex gap-2">
+                            <input type="text" id="chatInput" placeholder="Ask anything about Indian taxes..." class="flex-1 px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-teal-500 outline-none">
+                            <button id="sendChatBtn" class="w-12 h-12 bg-teal-600 text-white rounded-xl flex items-center justify-center hover:bg-teal-700 transition-all">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="py-24 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Why Choose InstantTaxFile?</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">Combining professional human auditing with lightning-fast AI tools.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all group">
+                    <div class="w-14 h-14 bg-teal-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-teal-600 transition-colors">
+                        <i class="fas fa-user-check text-teal-600 group-hover:text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Expert CA Panel</h3>
+                    <p class="text-slate-600 leading-relaxed">Every return is audited by a qualified Chartered Accountant.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
+                        <i class="fas fa-brain text-blue-600 group-hover:text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">AI Intelligence ✨</h3>
+                    <p class="text-slate-600 leading-relaxed">Instantly analyze notices and get tax planning suggestions via Gemini.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all group">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors">
+                        <i class="fas fa-shield-alt text-emerald-600 group-hover:text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Zero Risk</h3>
+                    <p class="text-slate-600 leading-relaxed">Data is handled with high security standards for maximum privacy.</p>
+                </div>
+
+                <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:shadow-xl transition-all group">
+                    <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-amber-600 transition-colors">
+                        <i class="fas fa-phone-volume text-amber-600 group-hover:text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Personalized Support</h3>
+                    <p class="text-slate-600 leading-relaxed">Call or WhatsApp us anytime during the filing process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-white pt-20 pb-10 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="bg-teal-600 p-2 rounded-lg">
+                            <i class="fas fa-bolt text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-tight"><span class="logo-font">instanttaxfile</span><span class="text-teal-500">.com</span></span>
+                    </div>
+                    <p class="text-slate-400">Trusted tax filing platform managed by Professional Chartered Accountants.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Contact</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li>📍 Gurgaon, Haryana, India</li>
+                        <li>📞 <a href="tel:+917676901038" class="hover:text-teal-400">+91 7676901038</a></li>
+                        <li>✉️ <a href="mailto:contact@instanttaxfile.com" class="hover:text-teal-400">contact@instanttaxfile.com</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Filing Services</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-slate-900 rounded-full text-xs border border-slate-800">ITR 1 & 2</span>
+                        <span class="px-3 py-1 bg-slate-900 rounded-full text-xs border border-slate-800">Business Returns</span>
+                        <span class="px-3 py-1 bg-slate-900 rounded-full text-xs border border-slate-800">Audit Services</span>
+                        <span class="px-3 py-1 bg-slate-900 rounded-full text-xs border border-slate-800">GST Filing</span>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-900 pt-8 text-center text-sm text-slate-500">
+                <p>&copy; 2026 InstantTaxFile.com. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI LOGIC -->
+    <script>
+        // Placeholder for Netlify Build to replace using sed command in netlify.toml
+        const apiKey = "__GEMINI_API_KEY__"; 
+        
+        async function fetchGemini(payload) {
+            // Using gemini-1.5-flash for reliability and free-tier access
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error?.message || 'API Error');
+            }
+            return await response.json();
+        }
+
+        // --- Chat Logic ---
+        const chatWindow = document.getElementById('chatWindow');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendChatBtn');
+
+        function appendMessage(text, role) {
+            if (!chatWindow) return;
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${role === 'user' ? 'chat-user' : 'chat-ai'}`;
+            bubble.innerText = text;
+            chatWindow.appendChild(bubble);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+            return bubble;
+        }
+
+        async function handleChat() {
+            const query = chatInput.value.trim();
+            // Guard clause to prevent running without a valid key replacement
+            if (!query || !apiKey || apiKey === "__GEMINI_API_KEY__") {
+                if (apiKey === "__GEMINI_API_KEY__") {
+                    appendMessage("System Note: AI is not yet configured. Please set GOOGLE_API_KEY in Netlify settings.", 'ai');
+                }
+                return;
+            }
+
+            chatInput.value = '';
+            appendMessage(query, 'user');
+
+            const loadingBubble = appendMessage('AI is thinking...', 'ai');
+            if (loadingBubble) loadingBubble.classList.add('loading-dots');
+
+            try {
+                const systemPrompt = "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer user queries about Income Tax in India. Be professional and concise. Assume New Tax Regime is default for FY 24-25 onwards.";
+                
+                const result = await fetchGemini({
+                    contents: [{ 
+                        parts: [
+                            { text: `System Instruction: ${systemPrompt}` },
+                            { text: query }
+                        ] 
+                    }]
+                });
+
+                const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again.";
+                if (loadingBubble) {
+                    loadingBubble.innerText = aiResponse;
+                    loadingBubble.classList.remove('loading-dots');
+                }
+            } catch (err) {
+                if (loadingBubble) {
+                    loadingBubble.innerText = "Error: " + err.message;
+                    loadingBubble.classList.remove('loading-dots');
+                }
+            }
+        }
+
+        if (sendBtn) sendBtn.onclick = handleChat;
+        if (chatInput) {
+            chatInput.onkeypress = (e) => e.key === 'Enter' && handleChat();
+        }
+
+        window.quickAsk = (q) => { 
+            if (chatInput) {
+                chatInput.value = q; 
+                handleChat(); 
+            }
+        };
+
+        window.clearChat = () => { 
+            if (chatWindow) {
+                chatWindow.innerHTML = ''; 
+                appendMessage("Hi! I'm your AI Tax assistant. How can I help you today?", 'ai'); 
+            }
+        };
+
+        // --- Document Analysis Logic ---
+        const docUpload = document.getElementById('docUpload');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const analysisResult = document.getElementById('analysisResult');
+        const uploadPreview = document.getElementById('uploadPreview');
+        let selectedBase64 = "";
+
+        if (docUpload) {
+            docUpload.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (re) => {
+                    selectedBase64 = re.target.result.split(',')[1];
+                    if (uploadPreview) uploadPreview.innerHTML = `<img src="${re.target.result}" class="max-h-32 rounded-lg shadow-sm mx-auto">`;
+                    if (analyzeBtn) {
+                        analyzeBtn.disabled = false;
+                        analyzeBtn.className = "w-full mt-6 py-3 bg-teal-600 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:bg-teal-700";
+                    }
+                };
+                reader.readAsDataURL(file);
+            };
+        }
+
+        if (analyzeBtn) {
+            analyzeBtn.onclick = async () => {
+                if (!selectedBase64 || apiKey === "__GEMINI_API_KEY__") return;
+                
+                analyzeBtn.disabled = true;
+                analyzeBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Analyzing...`;
+                if (analysisResult) {
+                    analysisResult.classList.remove('hidden');
+                    analysisResult.innerText = "Scanning document for tax insights...";
+                }
+
+                try {
+                    const prompt = "Explain what this Indian tax document is. Summarize key fields and amounts. Be brief and clear.";
+                    
+                    const result = await fetchGemini({
+                        contents: [{
+                            role: "user",
+                            parts: [
+                                { text: prompt },
+                                { inlineData: { mimeType: "image/png", data: selectedBase64 } }
+                            ]
+                        }]
+                    });
+
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Could not read document.";
+                    if (analysisResult) analysisResult.innerText = text;
+                } catch (err) {
+                    if (analysisResult) analysisResult.innerText = "Analysis failed: " + err.message;
+                } finally {
+                    analyzeBtn.disabled = false;
+                    analyzeBtn.innerHTML = "Analyze Again ✨";
+                }
+            };
+        }
+
+        // Standard Lead-Gen Form Handling (Google Sheets)
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxuD8mCPaiOTJvq2xP63P_xTTJVT-EJY3PdAuDnRjezEupmL1-ULbFgF1eoNrVK5HSM/exec";
+        const form = document.getElementById("taxForm");
+        const mainSubmitBtn = document.getElementById("submitBtn");
+
+        if (form) {
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                if (mainSubmitBtn) {
+                    mainSubmitBtn.disabled = true;
+                    mainSubmitBtn.innerHTML = `<i class="fas fa-sync-alt animate-spin mr-2"></i> Processing...`;
+                }
+                
+                const formData = {
+                    name: document.getElementById("name")?.value || "",
+                    phone: document.getElementById("phone")?.value || "",
+                    email: document.getElementById("email")?.value || "",
+                    filingType: document.getElementById("filingType")?.value || ""
+                };
+
+                try {
+                    await fetch(scriptURL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
+                    document.getElementById("successMessage")?.classList.remove("hidden");
+                    form.reset();
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    if (mainSubmitBtn) {
+                        mainSubmitBtn.disabled = false;
+                        mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`;
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
