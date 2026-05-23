@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InstantTaxFile.com | Expert Income Tax Filing India</title>
+    <title>InstantTaxFile.com | India's 1st AI Tax Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,7 +14,7 @@
         .glass-morphism {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .gradient-bg {
             background: linear-gradient(135deg, #0f172a 0%, #0d9488 100%);
@@ -24,6 +24,7 @@
             padding: 12px 16px;
             border-radius: 18px;
             margin-bottom: 12px;
+            font-size: 14px;
             line-height: 1.5;
         }
         .chat-user {
@@ -64,181 +65,243 @@
                     </span>
                 </div>
                 <div class="hidden md:flex space-x-8 font-medium text-slate-600">
-                    <a href="#features" class="hover:text-teal-600 transition-colors">Features</a>
-                    <a href="#ai-assistant" class="hover:text-teal-600 transition-colors">AI Help ✨</a>
-                    <a href="#about" class="hover:text-teal-600 transition-colors">About Us</a>
-                    <a href="tel:+917676901038" class="text-teal-600 font-bold"><i class="fas fa-phone mr-2"></i>+91 7676901038</a>
+                    <a href="#ai-assistant" class="text-teal-600 font-bold hover:text-teal-700 transition-colors">AI Assistant ✨</a>
+                    <a href="tel:+917676901038" class="flex items-center gap-2"><i class="fas fa-phone text-teal-600"></i> +91 7676901038</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <header class="gradient-bg pt-16 pb-32 px-4 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 relative z-10">
-            <div class="lg:w-1/2 text-center lg:text-left">
-                <span class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-teal-100 uppercase bg-teal-900/50 rounded-full">AI-Powered Tax Solutions</span>
-                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
-                    File Your Taxes with <span class="text-teal-300">AI Intelligence.</span>
-                </h1>
-                <p class="text-xl text-teal-50 mb-10 leading-relaxed">Get instant answers and CA-verified filing.</p>
-                <a href="#form-section" class="px-8 py-4 bg-white text-teal-900 font-bold rounded-xl shadow-lg hover:bg-teal-50 transition-all">Start Filing Now</a>
-            </div>
-
-            <div class="lg:w-5/12 w-full" id="form-section">
-                <div class="bg-white p-8 rounded-3xl shadow-2xl">
-                    <h2 class="text-2xl font-bold text-center mb-6">Get Started</h2>
-                    <form id="taxForm" class="space-y-4">
-                        <input type="text" id="name" required placeholder="Full Name" class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-teal-500">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="tel" id="phone" required placeholder="Phone" class="px-4 py-3 rounded-xl border border-slate-200 outline-none">
-                            <input type="email" id="email" required placeholder="Email" class="px-4 py-3 rounded-xl border border-slate-200 outline-none">
-                        </div>
-                        <select id="filingType" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none">
-                            <option value="">Income Category</option>
-                            <option>Salary</option>
-                            <option>Business</option>
-                            <option>Capital Gains</option>
-                        </select>
-                        <button type="submit" id="submitBtn" class="w-full py-4 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition-all">Submit Details</button>
-                        <div id="successMessage" class="hidden p-3 bg-green-100 text-green-700 rounded-xl text-center">Success! We will call you.</div>
-                    </form>
-                </div>
-            </div>
+    <header class="gradient-bg pt-12 pb-24 px-4 text-white text-center">
+        <div class="max-w-4xl mx-auto">
+            <span class="inline-block px-4 py-1 mb-6 text-xs font-bold tracking-widest uppercase bg-white/10 rounded-full border border-white/20">India's 1st AI-Integrated Tax Platform</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Tax Filing, Reimagined with <span class="text-teal-300">Intelligence.</span>
+            </h1>
+            <p class="text-lg text-teal-50 mb-10 opacity-90">Talk to our TaxBot or upload a notice for instant CA-grade clarity.</p>
+            <a href="#form-section" class="px-8 py-4 bg-white text-teal-900 font-bold rounded-xl shadow-xl hover:bg-teal-50 transition-all inline-block">Start Filing Now</a>
         </div>
     </header>
 
-    <section id="ai-assistant" class="py-24 px-4 bg-slate-100">
+    <section id="ai-assistant" class="py-20 px-4 -mt-16">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-extrabold mb-4">AI Tax Assistant ✨</h2>
-                <p class="text-slate-500">Instant answers for your Indian Tax queries.</p>
-            </div>
-
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Document Analyzer -->
-                <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
-                        <i class="fas fa-file-invoice-dollar text-teal-600"></i> Analyze Document ✨
-                    </h3>
-                    <div class="border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center cursor-pointer relative mb-4">
+                
+                <!-- Document Box -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 flex flex-col">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-600">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Analyze Document ✨</h3>
+                    </div>
+                    <p class="text-slate-500 text-sm mb-6">Got a tax notice or Form 16? Upload it and let AI explain it to you.</p>
+                    
+                    <div class="flex-1 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center p-6 text-center hover:border-teal-400 transition-colors group cursor-pointer relative">
                         <input type="file" id="docUpload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*">
-                        <div id="uploadPreview">
-                            <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 mb-2"></i>
-                            <p class="text-sm">Click to upload photo</p>
+                        <div id="uploadStatus">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 group-hover:text-teal-400 mb-3 transition-colors"></i>
+                            <p class="text-sm font-medium text-slate-600">Select Image/Photo</p>
                         </div>
                     </div>
-                    <button id="analyzeBtn" disabled class="w-full py-3 bg-slate-200 text-slate-500 font-bold rounded-xl transition-all">Analyze Now ✨</button>
-                    <div id="analysisResult" class="mt-4 p-4 bg-teal-50 border border-teal-100 rounded-xl text-sm hidden"></div>
+
+                    <button id="analyzeBtn" disabled class="w-full mt-6 py-4 bg-slate-200 text-slate-500 font-bold rounded-xl transition-all">
+                        Analyze Now ✨
+                    </button>
+                    <div id="analysisOutput" class="mt-4 p-4 bg-teal-50 rounded-xl text-xs text-slate-700 hidden"></div>
                 </div>
 
-                <!-- Chatbot -->
-                <div class="lg:col-span-2 bg-white rounded-3xl shadow-xl flex flex-col h-[550px] overflow-hidden">
-                    <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
-                        <span class="font-bold">TaxBot ✨</span>
-                        <button onclick="clearChat()" class="text-xs opacity-70 hover:opacity-100">Clear</button>
+                <!-- Chatbot Box -->
+                <div class="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-slate-100 flex flex-col overflow-hidden h-[600px]">
+                    <div class="p-5 bg-slate-900 text-white flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center text-white">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold leading-none">TaxBot ✨</h3>
+                                <span class="text-[10px] text-teal-400 font-bold tracking-widest uppercase">Expert Intelligence</span>
+                            </div>
+                        </div>
+                        <button id="clearChatBtn" class="text-xs text-slate-400 hover:text-white transition-colors">Clear</button>
                     </div>
-                    <div id="chatWindow" class="flex-1 overflow-y-auto p-6 flex flex-col space-y-4">
-                        <div class="chat-bubble chat-ai">Hi! Ask me about 80C, Capital Gains, or the New Tax Regime.</div>
+
+                    <div id="chatWindow" class="flex-1 overflow-y-auto p-6 flex flex-col bg-slate-50/50">
+                        <div class="chat-bubble chat-ai">
+                            Namaste! I am your AI Tax Assistant. Ask me about tax slabs, 80C, or capital gains.
+                        </div>
                     </div>
-                    <div class="p-4 border-t flex gap-2">
-                        <input type="text" id="chatInput" placeholder="Ask about Indian taxes..." class="flex-1 px-4 py-3 rounded-xl border outline-none focus:ring-2 focus:ring-teal-500">
-                        <button id="sendChatBtn" class="w-12 h-12 bg-teal-600 text-white rounded-xl flex items-center justify-center"><i class="fas fa-paper-plane"></i></button>
+
+                    <div class="p-4 bg-white border-t border-slate-100 relative">
+                        <div class="flex gap-3 items-center">
+                            <input type="text" id="chatInput" autocomplete="off" placeholder="Type your tax question here..." 
+                                class="flex-1 px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none text-slate-800 transition-all">
+                            <button id="sendChatBtn" class="w-14 h-14 bg-teal-600 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-teal-700 active:scale-95 transition-all">
+                                <i class="fas fa-paper-plane text-xl"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="form-section" class="py-20 px-4 bg-white">
+        <div class="max-w-xl mx-auto">
+            <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
+                <h2 class="text-2xl font-bold text-center mb-6">Expert CA Callback</h2>
+                <form id="taxForm" class="space-y-4">
+                    <input type="text" id="name" placeholder="Full Name" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-teal-500">
+                    <input type="tel" id="phone" placeholder="Phone Number" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-teal-500">
+                    <input type="email" id="email" placeholder="Email Address" required class="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-teal-500">
+                    <button type="submit" id="formSubmit" class="w-full py-4 bg-teal-600 text-white font-bold rounded-xl hover:bg-teal-700 transition-all">Request a Callback</button>
+                </form>
+                <div id="formSuccess" class="hidden mt-4 p-4 bg-green-100 text-green-700 rounded-xl text-center">Success! We will call you back soon.</div>
             </div>
         </div>
     </section>
 
     <script>
-        // CRITICAL: Ensure this placeholder matches your netlify.toml script
-        const apiKey = "__GEMINI_API_KEY__"; 
+        // Placeholder for Vercel/Netlify to swap
+        const apiKey = "__GEMINI_API_KEY__";
 
-        const chatWindow = document.getElementById('chatWindow');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendChatBtn');
-
-        function appendMessage(text, role) {
-            const div = document.createElement('div');
-            div.className = `chat-bubble ${role === 'user' ? 'chat-user' : 'chat-ai'}`;
-            div.innerText = text;
-            chatWindow.appendChild(div);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-            return div;
-        }
-
-        async function callGemini(parts) {
-            // FIX: Changed gemini-1.5-flash-latest to gemini-1.5-flash for v1beta compatibility
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    contents: [{ parts }],
-                    systemInstruction: { parts: [{ text: "You are an expert Indian Tax Consultant for InstantTaxFile.com. Answer queries about Income Tax in India professionally and concisely. For FY 24-25 and 25-26, the New Tax Regime is the default." }] }
-                })
-            });
-            if (!response.ok) {
-                const err = await response.json();
-                console.error("API Error:", err);
-                throw new Error("API Connection Failed");
-            }
-            return await response.json();
-        }
-
-        async function handleChat() {
-            const query = chatInput.value.trim();
-            if (!query || apiKey === "__GEMINI_API_KEY__") return;
+        // Wait for DOM to be fully ready to avoid "null" errors
+        document.addEventListener('DOMContentLoaded', () => {
             
-            chatInput.value = '';
-            appendMessage(query, 'user');
-            const loading = appendMessage('...', 'ai');
-            loading.classList.add('loading-dots');
+            // --- Element Selectors ---
+            const chatWindow = document.getElementById('chatWindow');
+            const chatInput = document.getElementById('chatInput');
+            const sendChatBtn = document.getElementById('sendChatBtn');
+            const clearChatBtn = document.getElementById('clearChatBtn');
+            const docUpload = document.getElementById('docUpload');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const taxForm = document.getElementById('taxForm');
 
-            try {
-                const res = await callGemini([{ text: query }]);
-                loading.innerText = res.candidates[0].content.parts[0].text;
-                loading.classList.remove('loading-dots');
-            } catch (e) {
-                loading.innerText = "Connection error. Please try later.";
+            // --- Helper Functions ---
+            function appendMessage(text, role) {
+                if (!chatWindow) return;
+                const div = document.createElement('div');
+                div.className = `chat-bubble ${role === 'user' ? 'chat-user' : 'chat-ai'}`;
+                div.innerText = text;
+                chatWindow.appendChild(div);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+                return div;
             }
-        }
 
-        sendBtn.onclick = handleChat;
-        chatInput.onkeypress = (e) => e.key === 'Enter' && handleChat();
-
-        const docUpload = document.getElementById('docUpload');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const analysisResult = document.getElementById('analysisResult');
-        let base64Img = "";
-
-        docUpload.onchange = (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = (re) => {
-                base64Img = re.target.result.split(',')[1];
-                analyzeBtn.disabled = false;
-                analyzeBtn.className = "w-full py-3 bg-teal-600 text-white font-bold rounded-xl";
-            };
-            reader.readAsDataURL(file);
-        };
-
-        analyzeBtn.onclick = async () => {
-            analyzeBtn.innerText = "Analyzing...";
-            analysisResult.classList.remove('hidden');
-            analysisResult.innerText = "Processing document...";
-            try {
-                const res = await callGemini([
-                    { text: "What is this Indian tax document? Summarize key numbers and any deadline or action needed." },
-                    { inlineData: { mimeType: "image/png", data: base64Img } }
-                ]);
-                analysisResult.innerText = res.candidates[0].content.parts[0].text;
-            } catch (e) {
-                analysisResult.innerText = "Analysis failed. Try a clearer photo.";
+            async function callAI(parts) {
+                if (apiKey === "__GEMINI_API_KEY__") {
+                    throw new Error("API Key not configured in Vercel/Netlify Environment Variables.");
+                }
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        contents: [{ parts }],
+                        systemInstruction: { parts: [{ text: "You are an expert Indian Tax AI for InstantTaxFile.com. Be professional and concise. Focus on FY 2024-25 rules." }] }
+                    })
+                });
+                if (!response.ok) throw new Error("Connection Error");
+                return await response.json();
             }
-            analyzeBtn.innerText = "Analyze Again ✨";
-        };
 
-        window.clearChat = () => { chatWindow.innerHTML = ''; appendMessage("How can I help you today?", 'ai'); };
+            // --- Chatbot Logic ---
+            async function handleChat() {
+                if (!chatInput || !chatInput.value.trim()) return;
+                const query = chatInput.value.trim();
+                chatInput.value = '';
+                appendMessage(query, 'user');
+                
+                const loading = appendMessage('...', 'ai');
+                loading.classList.add('loading-dots');
+
+                try {
+                    const data = await callAI([{ text: query }]);
+                    loading.innerText = data.candidates[0].content.parts[0].text;
+                    loading.classList.remove('loading-dots');
+                } catch (e) {
+                    loading.innerText = "Error: " + e.message;
+                    loading.classList.remove('loading-dots');
+                }
+            }
+
+            if (sendChatBtn) sendChatBtn.addEventListener('click', handleChat);
+            if (chatInput) chatInput.addEventListener('keypress', (e) => e.key === 'Enter' && handleChat());
+            if (clearChatBtn) clearChatBtn.addEventListener('click', () => {
+                chatWindow.innerHTML = '';
+                appendMessage("History cleared. How can I help you?", "ai");
+            });
+
+            // --- Document Logic ---
+            let base64Img = "";
+            if (docUpload) {
+                docUpload.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (re) => {
+                        base64Img = re.target.result.split(',')[1];
+                        if (analyzeBtn) {
+                            analyzeBtn.disabled = false;
+                            analyzeBtn.className = "w-full mt-6 py-4 bg-teal-600 text-white font-bold rounded-xl shadow-lg";
+                        }
+                        document.getElementById('uploadStatus').innerHTML = `<span class="text-teal-600 font-bold">File Loaded!</span>`;
+                    };
+                    reader.readAsDataURL(file);
+                };
+            }
+
+            if (analyzeBtn) {
+                analyzeBtn.onclick = async () => {
+                    const output = document.getElementById('analysisOutput');
+                    if (output) {
+                        output.classList.remove('hidden');
+                        output.innerText = "Analyzing...";
+                    }
+                    try {
+                        const data = await callAI([
+                            { text: "Analyze this Indian tax document. Be brief." },
+                            { inlineData: { mimeType: "image/png", data: base64Img } }
+                        ]);
+                        if (output) output.innerText = data.candidates[0].content.parts[0].text;
+                    } catch (e) {
+                        if (output) output.innerText = "Error: " + e.message;
+                    }
+                };
+            }
+
+            // --- Form Logic ---
+            if (taxForm) {
+                taxForm.onsubmit = async (e) => {
+                    e.preventDefault();
+                    const btn = document.getElementById('formSubmit');
+                    if (btn) {
+                        btn.innerText = "Sending...";
+                        btn.disabled = true;
+                    }
+                    
+                    const scriptURL = "https://script.google.com/macros/s/AKfycbxuD8mCPaiOTJvq2xP63P_xTTJVT-EJY3PdAuDnRjezEupmL1-ULbFgF1eoNrVK5HSM/exec";
+                    const data = {
+                        name: document.getElementById('name').value,
+                        phone: document.getElementById('phone').value,
+                        email: document.getElementById('email').value
+                    };
+
+                    try {
+                        await fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+                        document.getElementById('formSuccess').classList.remove('hidden');
+                        taxForm.reset();
+                    } catch (e) {
+                        console.error("Submission failed");
+                    }
+                    if (btn) {
+                        btn.innerText = "Request a Callback";
+                        btn.disabled = false;
+                    }
+                };
+            }
+        });
     </script>
 </body>
 </html>
