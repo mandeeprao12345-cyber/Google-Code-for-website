@@ -6,6 +6,7 @@
     <title>InstantTaxFile.com | Expert Income Tax Filing India</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d9488'/><text y='72' x='50' text-anchor='middle' font-size='55' font-family='serif' font-weight='bold' fill='white'>ITF</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -637,12 +638,90 @@ YOUR BEHAVIOR:
                 const formData = { name: userName, phone: userPhone, email: userEmail, filingType: userService };
 
                 try {
-                    // Send to Google Sheets
-                    await fetch(scriptURL, { method: "POST", mode: "no-cors", body: JSON.stringify(formData) });
+    const priceMap = {
+        "Salary Income": 1499,
+        "Capital Gains (Stocks / Property)": 2999,
+        "Foreign Income / NRI Tax Filing": 4999,
+        "Business / Professional Income": 4999,
+        "Tax Consultation": 1499,
+        "Notice Response": 4499
+    };
 
-                    // Send Zoho auto-reply email
-                    await fetch('/api/sendmail', {
-                        method: 'POST',
+    const amount = priceMap[userService] || 1499;
+
+    // Create Razorpay Order
+    const orderRes = await fetch('/api/createorder', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, service: userService })
+    });
+
+    const orderData = await orderRes.json();
+
+    if (orderData.error) {
+        throw new Error(orderData.error);
+    }
+
+    // Open Razorpay Payment Popup
+    const options = {
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        order_id: orderData.orderId,
+        name: 'InstantTaxFile.com',
+        description: userService,
+        theme: { color: '#0d9488' },
+        prefill: {
+            name: userName,
+            email: userEmail,
+            contact: userPhone
+        },
+        handler: async function(response) {
+            // Payment successful!
+            await fetch(scriptURL, {
+                method: "POST",
+                mode: "no-cors",
+                body: JSON.stringify({
+                    name: userName,
+                    phone: userPhone,
+                    email: userEmail,
+                    filingType: userService,
+                    paymentId: response.razorpay_payment_id,
+                    status: "PAID"
+                })
+            });
+
+            await fetch('/api/sendmail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: userName,
+                    email: userEmail,
+                    phone: userPhone,
+                    filingType: userService,
+                    paymentId: response.razorpay_payment_id
+                })
+            });
+
+            document.getElementById("successMessage").classList.remove("hidden");
+            document.getElementById("successMessage").innerHTML = `
+                <i class="fas fa-check-circle mr-2"></i>
+                Payment successful! ₹${amount} paid.
+                Our CA team will contact you within 24 hours.
+                <br><small>Payment ID: ${response.razorpay_payment_id}</small>
+            `;
+            form.reset();
+            document.getElementById('pricingCard')?.classList.add('hidden');
+        }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+
+} catch (error) {
+    console.error(error);
+    alert("Payment failed: " + error.message);
+}                        method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ name: userName, email: userEmail, phone: userPhone, filingType: userService })
                     });
@@ -654,7 +733,7 @@ YOUR BEHAVIOR:
                 } catch (error) {
                     console.error(error);
                 } finally {
-                    if (mainSubmitBtn) { mainSubmitBtn.disabled = false; mainSubmitBtn.innerHTML = `<span>Submit Details</span> <i class="fas fa-paper-plane text-sm"></i>`; }
+                    if (mainSubmitBtn) { mainSubmitBtn.disabled = false; mainSubmitBtn.innerHTML = `<span>Pay & Submit Securely</span><i class="fas fa-lock text-sm"></i>`; }
                 }
             });
         }
