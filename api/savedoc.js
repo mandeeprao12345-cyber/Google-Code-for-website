@@ -12,33 +12,37 @@ export default async function handler(req, res) {
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
     if (!serviceEmail || !privateKey || !folderId) {
+        console.error('Missing env vars:', { 
+            hasEmail: !!serviceEmail, 
+            hasKey: !!privateKey, 
+            hasFolder: !!folderId 
+        });
         return res.status(500).json({ error: 'Google Drive not configured' });
     }
 
     try {
-        // Step 1 — Create JWT token
         const token = await getAccessToken(serviceEmail, privateKey);
-
-        // Step 2 — Upload file to Google Drive
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
         const savedFileName = `${timestamp}_${fileName}`;
+        const boundary = 'boundary_instanttaxfile';
 
         const metadata = JSON.stringify({
             name: savedFileName,
             parents: [folderId]
         });
 
-        const fileBuffer = Buffer.from(fileData, 'base64');
-
-        // Use multipart upload
-        const boundary = 'boundary_instanttaxfile';
-        const delimiter = `\r\n--${boundary}\r\n`;
-        const closeDelimiter = `\r\n--${boundary}--`;
-
-        const metadataPart = `Content-Type: application/json\r\n\r\n${metadata}`;
-        const filePart = `Content-Type: ${mimeType}\r\nContent-Transfer-Encoding: base64\r\n\r\n${fileData}`;
-
-        const requestBody = delimiter + metadataPart + delimiter + filePart + closeDelimiter;
+        const requestBody = [
+            `--${boundary}`,
+            'Content-Type: application/json',
+            '',
+            metadata,
+            `--${boundary}`,
+            `Content-Type: ${mimeType}`,
+            'Content-Transfer-Encoding: base64',
+            '',
+            fileData,
+            `--${boundary}--`
+        ].join('\r\n');
 
         const uploadResponse = await fetch(
             'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
@@ -59,7 +63,11 @@ export default async function handler(req, res) {
         }
 
         console.log('File saved to Drive:', uploadData.id);
-        res.status(200).json({ success: true, fileId: uploadData.id, fileName: savedFileName });
+        res.status(200).json({ 
+            success: true, 
+            fileId: uploadData.id, 
+            fileName: savedFileName 
+        });
 
     } catch (err) {
         console.error('Drive save error:', err.message);
@@ -67,28 +75,22 @@ export default async function handler(req, res) {
     }
 }
 
-// Generate Google OAuth2 access token from service account
 async function getAccessToken(email, privateKey) {
     const now = Math.floor(Date.now() / 1000);
 
-    const header = { alg: 'RS256', typ: 'JWT' };
-    const payload = {
+    const header = base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+    const payload = base64url(JSON.stringify({
         iss: email,
         scope: 'https://www.googleapis.com/auth/drive.file',
         aud: 'https://oauth2.googleapis.com/token',
         exp: now + 3600,
         iat: now
-    };
+    }));
 
-    const encodedHeader = base64url(JSON.stringify(header));
-    const encodedPayload = base64url(JSON.stringify(payload));
-    const signingInput = `${encodedHeader}.${encodedPayload}`;
-
-    // Sign with private key
+    const signingInput = `${header}.${payload}`;
     const signature = await signRS256(signingInput, privateKey);
     const jwt = `${signingInput}.${signature}`;
 
-    // Exchange JWT for access token
     const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -117,8 +119,8 @@ async function signRS256(input, privateKey) {
     const sign = createSign('RSA-SHA256');
     sign.update(input);
     sign.end();
-    const signature = sign.sign(privateKey);
-    return signature.toString('base64')
+    return sign.sign(privateKey)
+        .toString('base64')
         .replace(/\+/g, '-')
         .replace(/\//g, '_')
         .replace(/=/g, '');
