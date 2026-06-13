@@ -365,6 +365,17 @@ Always be accurate and concise. For complex queries recommend +91 7676901038.`;
                 const result = await fetchGemini({ contents: [{ parts: [{ text: `System: ${systemPrompt}` }, { text: query }] }] });
                 const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again.";
                 if (loadingBubble) { loadingBubble.innerText = aiResponse; loadingBubble.classList.remove('loading-dots'); }
+                fetch(scriptURL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        type: 'chatLog',
+        question: query,
+        answer: aiResponse
+    })
+}).catch(err => console.log("Silent log failed", err));
+
             } catch (err) {
                 if (loadingBubble) { loadingBubble.innerText = "Error: " + err.message; loadingBubble.classList.remove('loading-dots'); }
             }
