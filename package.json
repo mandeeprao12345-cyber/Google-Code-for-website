@@ -2,7 +2,6 @@
     "name": "instanttaxfile",
     "version": "1.0.0",
     "dependencies": {
-        "nodemailer": "^6.9.0",
-        "googleapis": "^144.0.0"
+        "nodemailer": "^6.9.0"
     }
 }
