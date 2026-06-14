@@ -542,20 +542,38 @@ if (docUpload) {
                         description: userService,
                         theme: { color: '#0d9488' },
                         prefill: { name: userName, email: userEmail, contact: userPhone },
-                        handler: async function(response) {
-                            // Step 3 — Payment success
-                            await fetch(scriptURL, {
-                                method: "POST",
-                                mode: "no-cors",
-                                body: JSON.stringify({ name: userName, phone: userPhone, email: userEmail, filingType: userService, paymentId: response.razorpay_payment_id, status: "PAID" })
-                            });
+                       handler: async function(response) {
+    const verifyRes = await fetch('/api/verifypayment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+            name: userName,
+            phone: userPhone,
+            email: userEmail,
+            filingType: userService
+        })
+    });
 
-                            await fetch('/api/sendmail', {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ name: userName, email: userEmail, phone: userPhone, filingType: userService, paymentId: response.razorpay_payment_id })
-                            });
+    const verifyData = await verifyRes.json();
 
+    if (!verifyRes.ok || !verifyData.success) {
+        throw new Error(verifyData.error || 'Payment verification failed');
+    }
+
+    await fetch('/api/sendmail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: userName,
+            email: userEmail,
+            phone: userPhone,
+            filingType: userService,
+            paymentId: verifyData.paymentId
+        })
+    });
                             const successMsg = document.getElementById("successMessage");
                             successMsg.classList.remove("hidden");
                             successMsg.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Payment of ₹${amount} successful! Our CA team will contact you within 24 hours. Payment ID: ${response.razorpay_payment_id}`;
