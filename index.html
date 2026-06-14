@@ -388,6 +388,15 @@ Always be accurate and concise. For complex queries recommend +91 7676901038.`;
                 const result = await fetchGemini({ contents: [{ parts: [{ text: `System: ${systemPrompt}` }, { text: query }] }] });
                 const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble connecting. Please try again.";
                 if (loadingBubble) { loadingBubble.innerText = aiResponse; loadingBubble.classList.remove('loading-dots'); }
+                // Log chat to Google Sheet
+fetch('/api/logchat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        question: query,
+        answer: aiResponse
+    })
+}).catch(err => console.log("Silent log failed", err));
                 fetch(scriptURL, {
     method: "POST",
     mode: "no-cors",
