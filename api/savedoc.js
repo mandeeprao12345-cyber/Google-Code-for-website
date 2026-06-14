@@ -3,10 +3,37 @@ export default async function handler(req, res) {
 
     const { fileData, mimeType, fileName } = req.body || {};
     
-    if (!fileData || !fileName) {
-        return res.status(400).json({ error: 'Missing file data' });
-    }
+   if (!fileData || !fileName) {
+    return res.status(400).json({ error: 'Missing file data' });
+}
 
+const allowedMimeTypes = [
+    'application/pdf',
+    'image/png',
+    'image/jpeg',
+    'image/jpg',
+    'image/webp'
+];
+
+if (!allowedMimeTypes.includes(mimeType)) {
+    return res.status(400).json({
+        error: 'Only PDF, PNG, JPG, JPEG and WEBP files are allowed.'
+    });
+}
+
+const approxFileSizeBytes = Math.ceil((fileData.length * 3) / 4);
+
+const maxFileSizeBytes = 5 * 1024 * 1024;
+
+if (approxFileSizeBytes > maxFileSizeBytes) {
+    return res.status(400).json({
+        error: 'File too large. Maximum 5MB.'
+    });
+}
+
+const safeFileName = String(fileName || 'uploaded-file')
+    .replace(/[^a-zA-Z0-9._-]/g, '_')
+    .slice(0, 120);
     try {
         const scriptURL = process.env.GOOGLE_APPS_SCRIPT_URL;
         
@@ -21,7 +48,7 @@ export default async function handler(req, res) {
                 type: 'fileUpload',
                 fileData: fileData,
                 mimeType: mimeType,
-                fileName: `${new Date().toISOString().replace(/[:.]/g, '-')}_${fileName}`
+                fileName: `${new Date().toISOString().replace(/[:.]/g, '-')}_${safeFileName}`
             })
         });
 
