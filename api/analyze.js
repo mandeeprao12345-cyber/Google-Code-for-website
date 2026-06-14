@@ -4,10 +4,40 @@ export default async function handler(req, res) {
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) return res.status(500).json({ error: 'API key not configured' });
 
-    const { fileData, mimeType, fileName } = req.body;
+    const { fileData, mimeType, fileName } = req.body || {};
 
-    if (!fileData) return res.status(400).json({ error: 'No file data provided' });
+if (!fileData) {
+    return res.status(400).json({ error: 'No file data provided' });
+}
 
+const allowedMimeTypes = [
+    'application/pdf',
+    'image/png',
+    'image/jpeg',
+    'image/jpg',
+    'image/webp'
+];
+
+if (!allowedMimeTypes.includes(mimeType)) {
+    return res.status(400).json({
+        error: 'Only PDF, PNG, JPG, JPEG and WEBP files are allowed.'
+    });
+}
+
+const approxFileSizeBytes = Math.ceil((fileData.length * 3) / 4);
+
+// Maximum file size: 5MB
+const maxFileSizeBytes = 5 * 1024 * 1024;
+
+if (approxFileSizeBytes > maxFileSizeBytes) {
+    return res.status(400).json({
+        error: 'File too large. Maximum 5MB.'
+    });
+}
+
+const safeFileName = String(fileName || 'uploaded-file')
+    .replace(/[^a-zA-Z0-9._-]/g, '_')
+    .slice(0, 120);
     try {
         const isPDF = mimeType === 'application/pdf';
 
@@ -49,7 +79,7 @@ Be clear, structured and helpful. Use ₹ symbol for amounts.`,
                         },
                         {
                             type: 'text',
-                            text: `Please analyze this Indian tax document (${fileName}) and provide a clear summary of all important tax-related information.`
+                            text: `Please analyze this Indian tax document (${safeFileName}) and provide a clear summary of all important tax-related information.`
                         }
                     ]
                 }]
