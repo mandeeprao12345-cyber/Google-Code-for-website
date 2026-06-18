@@ -389,11 +389,17 @@
         }
 
         async function handleChat() {
-            const query = chatInput.value.trim();
-            if (!query) return;
-            chatInput.value = '';
-            appendMessage(query, 'user');
-            const loadingBubble = appendMessage('AI is thinking...', 'ai');
+           const query = chatInput.value.trim();
+if (!query) return;
+
+if (sendBtn) {
+    sendBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+    sendBtn.disabled = true;
+}
+
+chatInput.value = '';
+appendMessage(query, 'user');
+const loadingBubble = appendMessage('AI is thinking...', 'ai');
             if (loadingBubble) loadingBubble.classList.add('loading-dots');
             try {
                 const systemPrompt = `You are TaxBot, an expert Indian Income Tax Consultant for InstantTaxFile.com based in Gurgaon, India.
@@ -427,9 +433,17 @@ fetch('/api/logchat', {
     })
 }).catch(err => console.log("Silent log failed", err));
 
-            } catch (err) {
-                if (loadingBubble) { loadingBubble.innerText = "Error: " + err.message; loadingBubble.classList.remove('loading-dots'); }
-            }
+           } catch (err) {
+    if (loadingBubble) {
+        loadingBubble.innerText = "Error: " + err.message;
+        loadingBubble.classList.remove('loading-dots');
+    }
+} finally {
+    if (sendBtn) {
+        sendBtn.innerHTML = `<i class="fas fa-paper-plane"></i>`;
+        sendBtn.disabled = false;
+    }
+}
         }
 
         if (sendBtn) sendBtn.onclick = handleChat;
