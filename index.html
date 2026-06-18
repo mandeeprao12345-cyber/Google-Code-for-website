@@ -661,15 +661,33 @@ if (mobileMenuBtn && mobileMenu) {
     });
 }
     </script>
- 
-    <a
-    href="https://wa.me/917676901038?text=Hi%20InstantTaxFile%2C%20I%20need%20help%20with%20tax%20filing."
-    target="_blank"
-    rel="noopener noreferrer"
-    class="fixed bottom-5 right-5 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all"
-    aria-label="Chat on WhatsApp"
->
-    <i class="fab fa-whatsapp text-3xl"></i>
-</a>
+     <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+        class="fixed bottom-20 right-5 z-40 w-12 h-12 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all opacity-0 pointer-events-none"
+        aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/917676901038?text=Hi%20InstantTaxFile%2C%20I%20need%20help%20with%20tax%20filing." 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="fixed bottom-5 right-5 z-50 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-2xl flex items-center justify-center transition-all"
+       aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <script>
+        // Scroll to top button visibility
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                scrollTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                scrollTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+    </script>
 </body>
+    
 </html>
