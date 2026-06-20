@@ -639,11 +639,8 @@ if (docUpload) {
             paymentId: verifyData.paymentId
         })
     });
-                            const successMsg = document.getElementById("successMessage");
-                            successMsg.classList.remove("hidden");
-                            successMsg.innerHTML = `<i class="fas fa-check-circle mr-2"></i> Payment of ₹${amount} successful! Our CA team will contact you within 24 hours. Payment ID: ${response.razorpay_payment_id}`;
-                            form.reset();
-                            document.getElementById('pricingCard')?.classList.add('hidden');
+                           const thankYouUrl = `/thank-you.html?service=${encodeURIComponent(userService)}&amount=${encodeURIComponent(amount)}&payment_id=${encodeURIComponent(response.razorpay_payment_id)}`;
+window.location.href = thankYouUrl;
                         }
                     };
 
